@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MIS APP – Sosyal Forum Uygulaması
 
-## Getting Started
+**MIS APP**, Yönetim Bilişim Sistemleri (MIS) topluluğu için geliştirilmiş, modern ve etkileşimli bir **sosyal forum platformudur**.  
+Kullanıcılar **üye olabilir**, **profil oluşturabilir**, **gönderi paylaşabilir** ve **birbirini takip edebilir**.  
 
-First, run the development server:
+Uygulama **Next.js** tabanlıdır ve **Clerk** ile kimlik doğrulama, **Prisma** ile veritabanı yönetimi sağlar.  
+UI tarafında **Tailwind CSS**, **Radix UI** ve **Lucide** ikonları ile modern ve özelleştirilebilir bir tasarım sunar.  
+
+---
+
+## 🚀 Özellikler
+
+- **Kullanıcı Yönetimi**  
+  - Clerk entegrasyonu ile kayıt & giriş işlemleri  
+  - Profil bilgisi düzenleme (bio, website, lokasyon vb.)  
+  - Takip / Takipçi sistemi  
+
+- **Gönderi Yönetimi**  
+  - Kullanıcı gönderileri ve beğeniler  
+  - Post beğenme ve listeleme  
+  - Profilde paylaşılan gönderileri görme  
+
+- **Modern UI & Tema Desteği**  
+  - **Radix UI** bileşenleri (Dialog, Tabs, Avatar vb.)  
+  - **Tailwind CSS** ile özelleştirilebilir tema  
+  - **Dark / Light Mode** (next-themes ile tema geçişi)  
+
+- **Diğer Özellikler**  
+  - **UploadThing** entegrasyonu ile dosya yükleme  
+  - **date-fns** ile tarih formatlama  
+  - **Lucide-react** ikonlarıyla minimalist simgeler  
+  - **react-hot-toast** ile bildirim desteği  
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+- [Next.js 14](https://nextjs.org/) – Full-stack React framework  
+- [Clerk](https://clerk.com/) – Kimlik doğrulama ve kullanıcı yönetimi  
+- [Prisma](https://www.prisma.io/) – ORM & veritabanı yönetimi  
+- [Tailwind CSS](https://tailwindcss.com/) – Modern CSS framework  
+- [Radix UI](https://www.radix-ui.com/) – Erişilebilir & headless UI bileşenleri  
+- [UploadThing](https://uploadthing.com/) – Dosya yükleme altyapısı  
+- [Lucide-react](https://lucide.dev/) – İkon seti  
+- [next-themes](https://github.com/pacocoursey/next-themes) – Tema yönetimi  
+- [date-fns](https://date-fns.org/) – Tarih işlemleri  
+- [react-hot-toast](https://react-hot-toast.com/) – Bildirim sistemi  
+
+---
+
+erDiagram
+
+    USER {
+        string id PK
+        string email
+        string username
+        string clerkId
+        string name
+        string bio
+        string image
+        string location
+        string website
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    POST {
+        string id PK
+        string authorId FK
+        string content
+        string image
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    COMMENT {
+        string id PK
+        string content
+        string authorId FK
+        string postId FK
+        datetime createdAt
+    }
+
+    LIKE {
+        string id PK
+        string postId FK
+        string userId FK
+        datetime createdAt
+    }
+
+    FOLLOWS {
+        string followerId FK
+        string followingId FK
+        datetime createdAt
+    }
+
+    NOTIFICATION {
+        string id PK
+        string userId FK
+        string creatorId FK
+        string type
+        boolean read
+        string postId FK
+        string commentId FK
+        datetime createdAt
+    }
+
+    USER ||--o{ POST : "writes"
+    USER ||--o{ COMMENT : "writes"
+    USER ||--o{ LIKE : "likes"
+    USER ||--o{ FOLLOWS : "follows"
+    USER ||--o{ NOTIFICATION : "receives"
+
+    POST ||--o{ COMMENT : "has"
+    POST ||--o{ LIKE : "has"
+    POST ||--o{ NOTIFICATION : "triggers"
+
+    COMMENT ||--o{ NOTIFICATION : "triggers"
+
+    FOLLOWS {
+        string followerId PK
+        string followingId PK
+    }
+
+## 🔧 Çevresel Değişkenler
+- .env.local dosyasına eklemeniz gereken değişkenler:
+- DATABASE_URL=postgresql://user:password@localhost:5432/misapp
+- EXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
+- CLERK_SECRET_KEY=...
+- UPLOADTHING_SECRET=...
+
+
+## 📦 Kurulum
+
+Projeyi yerel ortamınıza almak için:
 
 ```bash
+# Repoyu klonlayın
+git clone https://github.com/kullaniciadi/mis-app.git
+cd mis-app
+
+# Bağımlılıkları yükleyin
+npm install
+
+# Çevresel değişkenleri ayarlayın
+cp .env.example .env.local
+# .env.local dosyasında Clerk, veritabanı ve UploadThing ayarlarını yapın
+
+# Prisma ile veritabanını migrate edin
+npx prisma migrate dev
+
+# Geliştirme sunucusunu başlatın
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
