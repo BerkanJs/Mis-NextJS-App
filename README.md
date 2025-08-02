@@ -8,7 +8,7 @@ UI tarafında **Tailwind CSS**, **Radix UI** ve **Lucide** ikonları ile modern 
 
 ## Uygulama Ekran Görüntüsü
 
-![MIS APP Ekran Görüntüsü](./src/assets/)
+![MIS APP Ekran Görüntüsü](./src/assets/HomePage.png)
 
 
 
