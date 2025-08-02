@@ -6,6 +6,12 @@ Kullanıcılar **üye olabilir**, **profil oluşturabilir**, **gönderi paylaşa
 Uygulama **Next.js** tabanlıdır ve **Clerk** ile kimlik doğrulama, **Prisma** ile veritabanı yönetimi sağlar.  
 UI tarafında **Tailwind CSS**, **Radix UI** ve **Lucide** ikonları ile modern ve özelleştirilebilir bir tasarım sunar.  
 
+## Uygulama Ekran Görüntüsü
+
+![MIS APP Ekran Görüntüsü](./src/assets/APP.png)
+
+
+
 ---
 
 ## 🚀 Özellikler
@@ -121,6 +127,12 @@ erDiagram
         string followerId PK
         string followingId PK
     }
+    
+
+## DB Diyagramı
+
+![MIS APP Ekran Görüntüsü](./src/assets/db.png)
+
 
 ## 🔧 Çevresel Değişkenler
 - .env.local dosyasına eklemeniz gereken değişkenler:
