@@ -142,6 +142,41 @@ erDiagram
 - UPLOADTHING_SECRET=...
 
 
+
+# 🔌 API & Servis Katmanı
+
+Uygulamamızda backend mantığı **Next.js Server Actions** kullanılarak servisler halinde ayrıştırılmıştır.  
+Bu servisler **Prisma ORM** ile veritabanına erişir ve **Clerk** kimlik doğrulamasını kullanır.
+
+## Servisler ve Fonksiyonlar
+
+### Bildirim Servisi (`notification.action.ts`)
+- **`getNotifications()`** → Giriş yapan kullanıcının bildirimlerini getirir.  
+- **`markNotificationsAsRead(notificationIds: string[])`** → Belirtilen bildirimleri okundu olarak işaretler.  
+
+### Post Servisi (`post.action.ts`)
+- **`createPost(content: string, image: string)`** → Yeni gönderi oluşturur.  
+- **`getPosts()`** → Tüm gönderileri (yorum, beğeni bilgileriyle) getirir.  
+- **`toggleLike(postId: string)`** → Gönderiyi beğenir veya beğenmekten vazgeçer.  
+- **`createComment(postId: string, content: string)`** → Gönderiye yorum ekler.  
+- **`deletePost(postId: string)`** → Kullanıcının kendi gönderisini siler.  
+
+### Profil & Kullanıcı Servisi (`profile.action.ts`)
+- **`getProfileByUsername(username: string)`** → Kullanıcı profili getirir.  
+- **`getUserPosts(userId: string)`** → Kullanıcının gönderilerini getirir.  
+- **`getUserLikedPosts(userId: string)`** → Kullanıcının beğendiği gönderileri getirir.  
+- **`updateProfile(formData: FormData)`** → Profil bilgilerini günceller.  
+- **`isFollowing(userId: string)`** → Giriş yapan kullanıcının, belirtilen kullanıcıyı takip edip etmediğini kontrol eder.  
+
+### Kullanıcı Yönetim Servisi (`user.action.ts`)
+- **`syncUser()`** → Clerk hesabını veritabanı ile senkronize eder.  
+- **`getUserByClerkId(clerkId: string)`** → Clerk ID’ye göre kullanıcı getirir.  
+- **`getDbUserId()`** → Giriş yapan kullanıcının veritabanı ID’sini döner.  
+- **`getRandomUsers()`** → Takip edilmeyen rastgele kullanıcıları getirir.  
+- **`toggleFollow(targetUserId: string)`** → Kullanıcıyı takip etme / takibi bırakma işlemi yapar.  
+
+
+
 ## 📦 Kurulum
 
 Projeyi yerel ortamınıza almak için:
