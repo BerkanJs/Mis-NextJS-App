@@ -131,7 +131,7 @@ erDiagram
 
 ## DB Diyagramı
 
-![MIS APP Ekran Görüntüsü](./src/assets/db.png)
+![MIS APP Ekran Görüntüsü](./src/assets/ErDiagramm.png)
 
 
 ## 🔧 Çevresel Değişkenler
